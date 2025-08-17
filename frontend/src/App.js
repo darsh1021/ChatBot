@@ -126,8 +126,8 @@ function App() {
                 <li style={{ marginBottom: "8px" }}>
                   <span style={{ color: "#ce9178" }}>$</span> Help me related assignment x
                 </li>
-                <li style={{ marginBottom: "8px" }}>
-                  <span style={{ color: "#ce9178" }}>$</span> If you are from Batch-C Enter your Name (Premium Peoples) 
+                <li style={{ marginBottom: "8px",color:"orange"}}>
+                  <span style={{ color: "#ce9178" }}>$</span>  Enter your Name (Premium Peoples) 
                 </li>
               </ul>
             </div>
@@ -150,7 +150,7 @@ function App() {
             <span>🔄 v1.0.0</span>
           </div>
           <div>
-            © {new Date().getFullYear()} DevAssistant — Built by Darshan ❤️
+            © {new Date().getFullYear()} DevAssistant — Built by Darshan with ❤️
           </div>
         </footer>
       </div>

@@ -28,13 +28,13 @@ const assignments = [
 ];
 
 const names = {
+  "Kalyani":"Server is broken , The data is under critical thinking... ",
   "Sudarshan": "The Founder Creater and Intellect of this webapp",
   "Sanket": "The partner in technology ..... well known persona ",
   "Akshay": "The partner in technology ..... Lay tension hay re ",
-  "Arnav" : "The partner in technology ..... Everything Blue",
+  "Arnav" : "..............BLUE............",
   "Staish" : "The partner in technology ..... aaj kay scam karu ",
   "Vedant" : "The partner in technology ..... Vedant bhaiya mitr parivar"
-
 };
 
 const prohibitedNames = ["Om"]; // add any names you want to block
