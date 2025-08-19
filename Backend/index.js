@@ -100,7 +100,7 @@ for (let word of words) {
   const capitalized = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase();
 
   if (names[capitalized]) {
-    saveResponse(userMessage,reply);
+    saveResponse(userMessage);
     return res.json({ reply: `${capitalized} → ${names[capitalized]} ` });
   }
 }
