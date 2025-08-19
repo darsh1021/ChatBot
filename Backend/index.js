@@ -32,7 +32,7 @@ const assignments = [
 ];
 
 const names = {
-  "Kalyani":"Server is broken , The data is under critical thinking...",
+  //"Kalyani":"Server is broken , The data is under critical thinking...",
   "Sudarshan": "😎😎😎 The Founder,Creater and Intellect of this webapp 😎😎😎",
   "Sanket": "The partner in technology ..... well known persona 😘",
   "Akshay": "The partner in technology ..... Lay tension hay re 🤦‍♂️",
