@@ -3,11 +3,15 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const OpenAI = require("openai");
 const cors = require("cors");
+const connectDB = require("./db");
+const SearchHistory = require("./Models/SearchHistory")
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+connectDB();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -28,16 +32,26 @@ const assignments = [
 ];
 
 const names = {
-  "Kalyani":"Server is broken , The data is under critical thinking... ",
-  "Sudarshan": "The Founder Creater and Intellect of this webapp",
-  "Sanket": "The partner in technology ..... well known persona ",
-  "Akshay": "The partner in technology ..... Lay tension hay re ",
-  "Arnav" : "..............BLUE............",
+  "Kalyani":"Server is broken , The data is under critical thinking...",
+  "Sudarshan": "😎😎😎 The Founder,Creater and Intellect of this webapp 😎😎😎",
+  "Sanket": "The partner in technology ..... well known persona 😘",
+  "Akshay": "The partner in technology ..... Lay tension hay re 🤦‍♂️",
+  "Arnav" : "💙💙💙💙BLUE💙💙💙💙",
   "Staish" : "The partner in technology ..... aaj kay scam karu ",
-  "Vedant" : "The partner in technology ..... Vedant bhaiya mitr parivar"
+  "Vedant" : "The partner in technology ..... Vedant bhaiya mitr parivar 💸💸💸"
 };
 
 const prohibitedNames = ["Om"]; // add any names you want to block
+
+async function saveResponse(query, response) {
+  try {
+    const newSearch = new SearchHistory({ query, response });
+    await newSearch.save();
+    console.log("Saved:", newSearch);
+  } catch (err) {
+    console.error("Error saving:", err);
+  }
+}
 
 // Function to find assignment
 function findAssignment(userMessage) {
@@ -74,6 +88,7 @@ app.post("/chat", async (req, res) => {
     const cleanWord = word.replace(/[.,!?]/g, '');
     const capitalized = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase();
     if (prohibitedNames.includes(capitalized)) {
+      saveResponse(userMessage,reply);
       return res.json({ reply: ".....Sharam Karo Apka Yaha Kya Kam....." });
     }
   }
@@ -85,11 +100,11 @@ for (let word of words) {
   const capitalized = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase();
 
   if (names[capitalized]) {
+    saveResponse(userMessage,reply);
     return res.json({ reply: `${capitalized} → ${names[capitalized]} ` });
   }
 }
 
-// 2️⃣ If message is a single word and not in names, ask AI to generate meaning
 if (words.length === 1) {
   try {
     const aiResponse = await client.chat.completions.create({
@@ -100,6 +115,7 @@ if (words.length === 1) {
       ],
     });
     const reply = aiResponse.choices[0].message.content;
+    saveResponse(userMessage,reply);
     return res.json({ reply });
   } catch (error) {
     console.error(error);
@@ -132,11 +148,14 @@ if (words.length === 1) {
     const reply = aiResponse.choices[0].message.content;
     
     if (assignment) {
+      saveResponse(userMessage,reply);
       return res.json({
         reply: `📘 *Assignment ${assignment.assiNo}*\nTitle: ${assignment.title}\n\n${reply}`,
       });
     } else {
-      return res.json({ reply }); // ChatGPT-style reply
+      
+      saveResponse(userMessage,reply);
+      return res.json({ reply });
     }
 
   } catch (error) {
